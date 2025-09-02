@@ -92,16 +92,65 @@ const htmlText = `
 </div>
 `;
 
+
+function getData(isActive=null) {
+    if (isActive === null) {
+        return data;
+    }
+
+    const res = [];
+    for (const obj of data) {
+        if (obj.isActive === isActive) {
+            res.push(obj);
+        }
+    }
+    console.log(res)
+    return res;
+}
 const container = document.querySelector('.list');
 
-for (const obj of data) {
-    container.insertAdjacentHTML('beforeend', htmlText);
-    const card = container.lastElementChild;
-    card.querySelector(' img').setAttribute('src', obj.logo);
-    card.querySelector(' h4').innerHTML = obj.name;
-    card.querySelector(' p').innerHTML = obj.description;
-
-    if (obj.isActive) {
-        card.querySelector(' input').checked = true;
+function loadData(data) {
+    container.replaceChildren();
+    for (const obj of data) {
+        container.insertAdjacentHTML('beforeend', htmlText);
+        const card = container.lastElementChild;
+        card.querySelector(' img').setAttribute('src', obj.logo);
+        card.querySelector(' h4').innerHTML = obj.name;
+        card.querySelector(' p').innerHTML = obj.description;
+    
+        if (obj.isActive) {
+            card.querySelector(' input').checked = true;
+        }
     }
 }
+
+const radioAll = document.querySelector('#radio1');
+const radioActive = document.querySelector('#radio2');
+const radioInactive = document.querySelector('#radio3');
+
+radioAll.addEventListener('change', (event) => {
+    console.log('All button cicked');
+    if(event.target.checked){
+        loadData(getData());
+    }
+});
+
+radioActive.addEventListener('change', (event) => {
+    console.log('Active button cicked');
+    if(event.target.checked){
+        loadData(getData(true));
+    }
+});
+
+radioInactive.addEventListener('change', (event) => {
+    if(event.target.checked){
+        loadData(getData(false));
+    }
+});
+
+window.onload = () => {
+    radioAll.checked = true;
+    radioAll.dispatchEvent(new Event('change', {'bubbles': true}));
+    
+};
+
