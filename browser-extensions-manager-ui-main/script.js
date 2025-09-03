@@ -85,7 +85,7 @@ const htmlText = `
 <div class="action-buttons">
   <button class="remove">Remove</button>
   <label class="toggle-switch">
-    <input type="checkbox" name="" id="">
+    <input type="checkbox" id="">
     <span class="slider"></span>
   </label>
 </div>
@@ -107,7 +107,30 @@ function getData(isActive=null) {
     console.log(res)
     return res;
 }
+
+function updateData(name, key, value) {
+    for (const obj of data) {
+        if (obj.name === name) {
+            obj[key] = value;
+        }
+    }
+}
+
+function deleteData(name) {
+    for (const obj of data) {
+        if (obj.name === name) {
+            let index = data.indexOf(obj);
+            if (index > -1) {
+                data.splice(index, 1);
+            }
+        }
+    }
+}
+
 const container = document.querySelector('.list');
+const radioAll = document.querySelector('#radio1');
+const radioActive = document.querySelector('#radio2');
+const radioInactive = document.querySelector('#radio3');
 
 function loadData(data) {
     container.replaceChildren();
@@ -121,22 +144,38 @@ function loadData(data) {
         if (obj.isActive) {
             card.querySelector(' input').checked = true;
         }
+
+        card.querySelector(' .remove').addEventListener('click', (event) => {
+            deleteData(obj.name)
+            container.removeChild(card)
+        });
+
+        card.querySelector(' input').addEventListener('change', (event) => {
+            if(event.target.checked) {
+                updateData(obj.name, 'isActive', true);
+                if(radioInactive.checked) {
+                    container.removeChild(card)
+                }
+            } else {
+                updateData(obj.name, 'isActive', false);
+                if(radioActive.checked) {
+                    container.removeChild(card)
+                }
+            }
+        })
+
     }
 }
 
-const radioAll = document.querySelector('#radio1');
-const radioActive = document.querySelector('#radio2');
-const radioInactive = document.querySelector('#radio3');
+
 
 radioAll.addEventListener('change', (event) => {
-    console.log('All button cicked');
     if(event.target.checked){
         loadData(getData());
     }
 });
 
 radioActive.addEventListener('change', (event) => {
-    console.log('Active button cicked');
     if(event.target.checked){
         loadData(getData(true));
     }
