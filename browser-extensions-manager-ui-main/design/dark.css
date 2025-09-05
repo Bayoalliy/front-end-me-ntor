@@ -14,8 +14,8 @@
 
 @font-face {
     font-family: 'Noto-sans';
-    src: url('./assets/fonts/NotoSans-VariableFont_wdth\,wght.ttf'),
-         url('./assets/fonts/NotoSans-Italic-VariableFont_wdth\,wght.ttf');
+    src: url('../assets/fonts/NotoSans-VariableFont_wdth\,wght.ttf'),
+         url('../assets/fonts/NotoSans-Italic-VariableFont_wdth\,wght.ttf');
 }
 
 body {
@@ -50,7 +50,7 @@ section {
 }
 
 .logo {
-    background: url('./assets/images/dark_logo.svg');
+    background: url('../assets/images/dark_logo.svg');
     background-repeat: no-repeat;
     background-position: center;
     width: 180px;
@@ -67,7 +67,7 @@ section {
 }
 
 .mode {
-    background: hsl(225, 23%, 24%) url("./assets/images/icon-sun.svg");
+    background: hsl(225, 23%, 24%) url("../assets/images/icon-sun.svg");
     background-repeat: no-repeat;
     background-position: center;
     border-style: none;
