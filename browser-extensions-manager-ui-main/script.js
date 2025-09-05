@@ -92,6 +92,18 @@ const htmlText = `
 </div>
 `;
 
+//toggling between light and dark mode
+document.querySelector('.mode').addEventListener('click', () => {
+    const style = document.querySelector('link[type="text/css"]');
+    if (style.getAttribute('id') === 'light') {
+        style.setAttribute('id', 'dark');
+        style.setAttribute('href', './dark.css');
+    } else {
+        style.setAttribute('id', 'light');
+        style.setAttribute('href', './light.css');
+    }
+});
+
 
 function getData(isActive=null) {
     if (isActive === null) {
@@ -104,7 +116,6 @@ function getData(isActive=null) {
             res.push(obj);
         }
     }
-    console.log(res)
     return res;
 }
 
@@ -154,12 +165,16 @@ function loadData(data) {
             if(event.target.checked) {
                 updateData(obj.name, 'isActive', true);
                 if(radioInactive.checked) {
-                    container.removeChild(card)
+                    setTimeout(() => {
+                        container.removeChild(card)
+                    }, 300);
                 }
             } else {
                 updateData(obj.name, 'isActive', false);
                 if(radioActive.checked) {
-                    container.removeChild(card)
+                    setTimeout(() => {
+                        container.removeChild(card)
+                    }, 300);
                 }
             }
         })
@@ -186,6 +201,8 @@ radioInactive.addEventListener('change', (event) => {
         loadData(getData(false));
     }
 });
+
+
 
 window.onload = () => {
     radioAll.checked = true;
